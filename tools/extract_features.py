@@ -177,7 +177,7 @@ def get_detections_from_im(cfg, model, im, image_id, feat_blob_name,
         objects = np.argmax(cls_prob[keep_boxes], axis=1)
 
 
-    return box_features[keep_boxes]
+    return box_features[keep_boxes], rois[keep_boxes]
 
     #return {
     #    "image_id": image_id,
@@ -248,13 +248,13 @@ def main(args):
             if not os.path.exists(lock_folder):
                 os.makedirs(lock_folder)
 
-            result = get_detections_from_im(cfg, model, im,
+            result, box = get_detections_from_im(cfg, model, im,
                                             image_id,args.feat_name,
                                             args.min_bboxes,
                                             args.max_bboxes,
                                             bboxes=bbox)
 
-            np.save(outfile, result)
+            np.save(outfile, np.c_[result, box])
             os.rmdir(lock_folder)
 
         count += 1
