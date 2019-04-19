@@ -1,5 +1,4 @@
 #!/usr/bin/env python2
-
 # Copyright (c) 2017-present, Facebook, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +34,6 @@ import base64
 import csv
 import timeit
 import json
-
 
 from detectron.utils.io import cache_url
 import detectron.utils.c2 as c2_utils
@@ -177,7 +175,7 @@ def get_detections_from_im(cfg, model, im, image_id, feat_blob_name,
         objects = np.argmax(cls_prob[keep_boxes], axis=1)
 
 
-    return box_features[keep_boxes], rois[keep_boxes]
+    return box_features[keep_boxes], cls_boxes[keep_boxes]
 
     #return {
     #    "image_id": image_id,
